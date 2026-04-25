@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QBox NFC Tagger &mdash; Privacy Policy</title>
+    <style>
+        :root {
+            --blue: #007AFF;
+            --bg: #f9fafb;
+            --card: #ffffff;
+            --text: #1d1d1f;
+            --secondary: #6e6e73;
+            --border: #e5e7eb;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 48px 24px;
+        }
+        .back {
+            display: inline-block;
+            color: var(--blue);
+            text-decoration: none;
+            font-size: 15px;
+            margin-bottom: 24px;
+        }
+        .back:hover { text-decoration: underline; }
+        h1 { font-size: 32px; font-weight: 700; margin-bottom: 8px; }
+        .updated {
+            color: var(--secondary);
+            font-size: 14px;
+            margin-bottom: 32px;
+        }
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 16px;
+        }
+        .card h2 { font-size: 20px; font-weight: 600; margin-bottom: 12px; }
+        .card p {
+            color: var(--secondary);
+            font-size: 15px;
+            margin-bottom: 12px;
+        }
+        .card p:last-child { margin-bottom: 0; }
+        .card ul {
+            color: var(--secondary);
+            font-size: 15px;
+            padding-left: 22px;
+            margin-bottom: 12px;
+        }
+        .card li { margin-bottom: 6px; }
+        .card strong { color: var(--text); }
+        footer {
+            text-align: center;
+            margin-top: 48px;
+            color: var(--secondary);
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back">&larr; Back to QBox NFC Tagger</a>
+        <h1>Privacy Policy</h1>
+        <p class="updated">Last updated: April 25, 2026</p>
+
+        <div class="card">
+            <h2>The Short Version</h2>
+            <p>QBox NFC Tagger does not collect, transmit, sell, or share any personal information. There are no accounts, no analytics, no advertising SDKs, and no third-party services. Everything you do in the app stays on your device.</p>
+        </div>
+
+        <div class="card">
+            <h2>Bluetooth</h2>
+            <p>QBox NFC Tagger uses Bluetooth Low Energy (BLE) to communicate with an external NFC reader device (Arduino Nano 33 BLE + PN532). Bluetooth is used solely to:</p>
+            <ul>
+                <li>Discover nearby NFC reader devices advertising the Nordic UART Service</li>
+                <li>Send read and write commands to the connected reader</li>
+                <li>Receive NFC tag data from the reader</li>
+            </ul>
+            <p>No Bluetooth data is recorded, transmitted to external servers, or shared with third parties. The app does not track or log which devices you connect to.</p>
+        </div>
+
+        <div class="card">
+            <h2>NFC Tag Data</h2>
+            <p>The app reads and writes data to NFC tags placed on the external reader. This data consists of filament information (material type, color, and manufacturer codes) stored on the physical MIFARE Classic 1K tag. Tag data is displayed on-screen and is not transmitted, logged, or stored beyond the current session.</p>
+        </div>
+
+        <div class="card">
+            <h2>Data Storage</h2>
+            <p>The only data persisted on your device is your preference settings (continuous read/write mode toggles and demo mode state). These are stored locally using standard iOS mechanisms and are never transmitted off your device.</p>
+        </div>
+
+        <div class="card">
+            <h2>What QBox NFC Tagger Does Not Do</h2>
+            <ul>
+                <li>No analytics or telemetry</li>
+                <li>No crash reporting services</li>
+                <li>No advertising or tracking SDKs</li>
+                <li>No user accounts or sign-in</li>
+                <li>No network requests of any kind</li>
+                <li>No access to location, camera, microphone, contacts, photos, calendar, health, or motion data</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>Children</h2>
+            <p>QBox NFC Tagger does not knowingly collect any information from anyone, including children under 13.</p>
+        </div>
+
+        <div class="card">
+            <h2>Changes to This Policy</h2>
+            <p>If this policy changes, the updated version will be posted on this page with a new &ldquo;Last updated&rdquo; date.</p>
+        </div>
+
+        <div class="card">
+            <h2>Contact</h2>
+            <p>Questions about privacy? Open an issue at <a href="https://github.com/ayefon/QboxNFCTagger/issues" style="color: var(--blue);">github.com/ayefon/QboxNFCTagger/issues</a>.</p>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 Don Babcock. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>

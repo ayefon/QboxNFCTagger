@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QBox NFC Tagger &mdash; Support</title>
+    <style>
+        :root {
+            --blue: #007AFF;
+            --bg: #f9fafb;
+            --card: #ffffff;
+            --text: #1d1d1f;
+            --secondary: #6e6e73;
+            --border: #e5e7eb;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 48px 24px;
+        }
+        .back {
+            display: inline-block;
+            color: var(--blue);
+            text-decoration: none;
+            font-size: 15px;
+            margin-bottom: 24px;
+        }
+        .back:hover { text-decoration: underline; }
+        h1 { font-size: 32px; font-weight: 700; margin-bottom: 8px; }
+        .lede {
+            color: var(--secondary);
+            font-size: 16px;
+            margin-bottom: 32px;
+        }
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 16px;
+        }
+        .card h2 { font-size: 20px; font-weight: 600; margin-bottom: 12px; }
+        .card h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 16px;
+            margin-bottom: 6px;
+        }
+        .card h3:first-of-type { margin-top: 0; }
+        .card p {
+            color: var(--secondary);
+            font-size: 15px;
+            margin-bottom: 12px;
+        }
+        .card p:last-child { margin-bottom: 0; }
+        .card ul {
+            color: var(--secondary);
+            font-size: 15px;
+            padding-left: 22px;
+            margin-bottom: 12px;
+        }
+        .card li { margin-bottom: 6px; }
+        .card a { color: var(--blue); }
+        .button {
+            display: inline-block;
+            background: var(--blue);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            margin-top: 8px;
+        }
+        .button:hover { opacity: 0.85; }
+        footer {
+            text-align: center;
+            margin-top: 48px;
+            color: var(--secondary);
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back">&larr; Back to QBox NFC Tagger</a>
+        <h1>Support</h1>
+        <p class="lede">Tips, troubleshooting, and how to get in touch.</p>
+
+        <div class="card">
+            <h2>Requirements</h2>
+            <ul>
+                <li>iPhone running iOS 17 or later</li>
+                <li>Arduino Nano 33 BLE running the NFC bridge firmware</li>
+                <li>PN532 NFC module wired to the Arduino via SPI or I2C</li>
+                <li>MIFARE Classic 1K tags (FM11RF08S) as used in QIDI Box filament spools</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>Getting Started</h2>
+            <h3>1. Connect your reader</h3>
+            <p>Power on the Arduino Nano 33 BLE with the PN532 module attached. Open the app and go to the <strong>Connect</strong> tab. The app will scan for Bluetooth devices advertising the Nordic UART Service. Tap your reader to connect.</p>
+            <h3>2. Read a tag</h3>
+            <p>Place a QIDI Box filament tag on the PN532 reader. Go to the <strong>Read</strong> tab and tap <strong>Read Tag</strong>. The app reads sector 1, block 0 and displays the material, color, and manufacturer.</p>
+            <h3>3. Write a tag</h3>
+            <p>Go to the <strong>Write</strong> tab, select a material and color from the picker, then tap <strong>Write to Tag</strong>. The data is written to block 4 of the MIFARE Classic 1K chip.</p>
+        </div>
+
+        <div class="card">
+            <h2>FAQ</h2>
+
+            <h3>Bluetooth says &ldquo;Unavailable&rdquo;</h3>
+            <p>Make sure Bluetooth is enabled in your iPhone&rsquo;s Settings and that QBox NFC Tagger has permission to use Bluetooth. Go to <strong>Settings &gt; Privacy &amp; Security &gt; Bluetooth</strong> and ensure the app is allowed.</p>
+
+            <h3>No devices found when scanning</h3>
+            <p>Ensure your Arduino Nano 33 BLE is powered on and running the NFC bridge firmware. The device must be advertising the Nordic UART Service (NUS). Try moving your iPhone closer to the Arduino.</p>
+
+            <h3>Read or Write timed out</h3>
+            <p>Place the NFC tag directly on the PN532 reader before tapping Read or Write. The reader needs 1&ndash;2 seconds to detect the tag. Enable <strong>Continuous Mode</strong> to retry automatically until the tag is detected.</p>
+
+            <h3>Authentication error</h3>
+            <p>The app tries the QIDI authentication key first, then falls back to the default MIFARE key. If both fail, the tag may use a non-standard key that is not currently supported.</p>
+
+            <h3>What is Continuous Mode?</h3>
+            <p>Enable the <strong>Continuous Read</strong> or <strong>Continuous Write</strong> toggle to keep retrying until a tag is successfully read or written. This is useful when positioning the tag on the reader &mdash; the app automatically detects it when contact is made. Tap the button again to cancel. Both toggles remember their state between app launches.</p>
+
+            <h3>What is Demo Mode?</h3>
+            <p>Demo Mode simulates a connected NFC reader so you can explore the app without hardware. Enable it on the <strong>Help</strong> tab. All operations return simulated data and an orange &ldquo;DEMO MODE&rdquo; banner appears at the top of the screen.</p>
+        </div>
+
+        <div class="card">
+            <h2>Contact &amp; Bug Reports</h2>
+            <p>The fastest way to report a bug, request a feature, or ask a question is to open a GitHub issue.</p>
+            <a href="https://github.com/ayefon/QboxNFCTagger/issues" class="button">Open a GitHub Issue</a>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 Don Babcock. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>

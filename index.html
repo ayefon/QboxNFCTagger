@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QBox NFC Tagger</title>
+    <style>
+        :root {
+            --blue: #007AFF;
+            --bg: #f9fafb;
+            --card: #ffffff;
+            --text: #1d1d1f;
+            --secondary: #6e6e73;
+            --border: #e5e7eb;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 48px 24px;
+        }
+        header { text-align: center; margin-bottom: 48px; }
+        .icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 22px;
+            background: linear-gradient(135deg, #007AFF, #00C6FF);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 12px rgba(0, 122, 255, 0.25);
+        }
+        .icon svg { width: 56px; height: 56px; fill: white; }
+        h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+        .tagline { color: var(--secondary); font-size: 17px; }
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 16px;
+        }
+        .card h2 { font-size: 20px; font-weight: 600; margin-bottom: 12px; }
+        .card p { color: var(--secondary); font-size: 15px; }
+        .links {
+            display: flex;
+            gap: 12px;
+            margin-top: 32px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .links a {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: opacity 0.2s;
+        }
+        .links a:hover { opacity: 0.85; }
+        .links .primary { background: var(--blue); color: white; }
+        .links .secondary-link {
+            background: var(--card);
+            color: var(--blue);
+            border: 1px solid var(--border);
+        }
+        footer {
+            text-align: center;
+            margin-top: 48px;
+            color: var(--secondary);
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="icon">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="4" y="2" width="16" height="20" rx="2" fill="none" stroke="white" stroke-width="1.5"/>
+                    <circle cx="12" cy="10" r="3" fill="none" stroke="white" stroke-width="1.5"/>
+                    <path d="M16 7a5.5 5.5 0 0 1 0 6" fill="none" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
+                    <path d="M18 5a8.5 8.5 0 0 1 0 10" fill="none" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
+                    <line x1="8" y1="17" x2="16" y2="17" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+                    <line x1="8" y1="19.5" x2="13" y2="19.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <h1>QBox NFC Tagger</h1>
+            <p class="tagline">Read and write NFC tags on QIDI Box filament spools</p>
+        </header>
+
+        <div class="card">
+            <h2>What It Does</h2>
+            <p>QBox NFC Tagger connects to an Arduino Nano 33 BLE + PN532 NFC reader over Bluetooth to read and write filament data on MIFARE Classic 1K tags used in QIDI Box 3D printer spools. Identify material type, color, and manufacturer at a glance, or reprogram tags with new filament information.</p>
+        </div>
+
+        <div class="card">
+            <h2>Features</h2>
+            <p>Bluetooth Low Energy scanner &bull; One-tap tag reading &bull; Filament material and color picker with color swatches &bull; Tag writing with verification &bull; Continuous read/write mode for hands-free operation &bull; Demo mode for testing without hardware &bull; Support for 20+ filament materials and colors</p>
+        </div>
+
+        <div class="card">
+            <h2>Requirements</h2>
+            <p>iPhone running iOS 17 or later, an Arduino Nano 33 BLE microcontroller with PN532 NFC module running the NFC bridge firmware, and MIFARE Classic 1K NFC tags (FM11RF08S) as used in QIDI Box filament spools.</p>
+        </div>
+
+        <div class="links">
+            <a href="privacy.html" class="primary">Privacy Policy</a>
+            <a href="support.html" class="secondary-link">Support</a>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 Don Babcock. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>
