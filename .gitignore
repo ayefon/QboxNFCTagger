@@ -1,0 +1,2 @@
+# Ignore OS-specific files (e.g., macOS search indices)
+.DS_Store
