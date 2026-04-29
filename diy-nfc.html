@@ -93,6 +93,18 @@
             font-size: 0.95rem;
         }
         .back:hover { text-decoration: underline; }
+        .card a.download {
+            display: inline-block;
+            background: #0071e3;
+            color: white;
+            padding: 0.7rem 1.25rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-top: 0.5rem;
+        }
+        .card a.download:hover { opacity: 0.85; text-decoration: none; }
     </style>
 </head>
 <body>
@@ -200,6 +212,32 @@
                 <li>Power the XIAO from USB-C. The PN532's onboard LED should light up.</li>
                 <li>Flash your firmware and bring an NFC tag near the antenna side of the PN532 to confirm it reads.</li>
             </ol>
+            <p style="margin-top: 0.75rem;">Once everything works on the bench, see the <a href="enclosure.html">enclosure page</a> for a 3D-printable case to house the build.</p>
+        </div>
+
+        <div class="card">
+            <h2>Firmware</h2>
+            <p>The XIAO ESP32-C3 runs a small Arduino sketch that reads/writes MIFARE Classic tags via the PN532 and exposes the operations to the iPhone over BLE using the Nordic UART Service.</p>
+            <a href="NFC-SEED-ESP32C3.ino" class="download" download>Download NFC-SEED-ESP32C3.ino</a>
+            <h3 style="font-size: 1rem; margin-top: 1.25rem; margin-bottom: 0.4rem;">Loading the sketch in the Arduino IDE</h3>
+            <ol style="padding-left: 1.25rem;">
+                <li style="margin-bottom: 0.3rem;">Install the <a href="https://www.arduino.cc/en/software">Arduino IDE</a> (2.x is recommended).</li>
+                <li style="margin-bottom: 0.3rem;">Add ESP32 board support: <strong>Arduino IDE &rarr; Settings</strong> (or <strong>File &rarr; Preferences</strong> on Windows/Linux), and paste <code>https://espressif.github.io/arduino-esp32/package_esp32_index.json</code> into <em>Additional Boards Manager URLs</em>.</li>
+                <li style="margin-bottom: 0.3rem;">Open <strong>Tools &rarr; Board &rarr; Boards Manager</strong>, search for <em>esp32</em>, and install <strong>esp32 by Espressif Systems</strong> (2.0.14 or newer).</li>
+                <li style="margin-bottom: 0.3rem;">Select <strong>Tools &rarr; Board &rarr; ESP32 Arduino &rarr; XIAO_ESP32C3</strong>, then enable <strong>Tools &rarr; USB CDC On Boot &rarr; Enabled</strong> so serial logging works over USB.</li>
+                <li style="margin-bottom: 0.3rem;">Open <strong>Tools &rarr; Manage Libraries</strong> and install:
+                    <ul style="margin-top: 0.3rem;">
+                        <li><strong>NimBLE-Arduino</strong> (v2.x) &mdash; the BLE stack</li>
+                        <li><strong>PN532</strong> by Elechouse &mdash; install both <em>PN532</em> (core) and <em>PN532_I2C</em> (I&sup2;C HAL) from the same package. The Adafruit PN532 library's I&sup2;C path is unreliable on ESP32; the Elechouse library is the known-good choice.</li>
+                    </ul>
+                </li>
+                <li style="margin-bottom: 0.3rem;">Download the sketch above and open it with <strong>File &rarr; Open</strong>. The Arduino IDE will offer to move it into a folder of the same name &mdash; accept.</li>
+                <li style="margin-bottom: 0.3rem;">Plug the XIAO ESP32-C3 into your computer with a USB-C cable, then pick it under <strong>Tools &rarr; Port</strong>.</li>
+                <li style="margin-bottom: 0.3rem;">Click <strong>Upload</strong> (the right-arrow button). After flashing, open the Serial Monitor at 115200 baud to confirm the PN532 initializes and BLE starts advertising.</li>
+            </ol>
+            <div class="callout" style="margin-top: 0.85rem;">
+                <strong>If the upload fails to find the board:</strong> hold the BOOT button on the XIAO, tap RESET, then release BOOT to force the bootloader. On macOS, also verify that you've granted the IDE permission to use the USB serial device.
+            </div>
         </div>
 
         <div class="card">
@@ -209,7 +247,7 @@
     </main>
     <footer>
         <p>&copy; 2026 Don Babcock. All rights reserved.</p>
-        <p><a href="index.html">Home</a> &middot; <a href="parts.html">Parts</a> &middot; <a href="diy-nfc.html">DIY NFC</a> &middot; <a href="support.html">Support</a> &middot; <a href="privacy.html">Privacy Policy</a></p>
+        <p><a href="index.html">Home</a> &middot; <a href="parts.html">Parts</a> &middot; <a href="diy-nfc.html">DIY NFC</a> &middot; <a href="enclosure.html">Enclosure</a> &middot; <a href="support.html">Support</a> &middot; <a href="privacy.html">Privacy Policy</a></p>
     </footer>
 </body>
 </html>
