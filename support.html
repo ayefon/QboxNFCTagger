@@ -68,7 +68,7 @@
         }
         .card li { margin-bottom: 6px; }
         .card a { color: var(--blue); }
-        .button {
+        .card a.button {
             display: inline-block;
             background: var(--blue);
             color: white;
@@ -79,7 +79,7 @@
             font-size: 15px;
             margin-top: 8px;
         }
-        .button:hover { opacity: 0.85; }
+        .card a.button:hover { opacity: 0.85; }
         footer {
             text-align: center;
             margin-top: 48px;
@@ -98,7 +98,7 @@
             <h2>Requirements</h2>
             <ul>
                 <li>iPhone running iOS 17 or later</li>
-                <li>Arduino Nano 33 BLE running the NFC bridge firmware</li>
+                <li>Seeed Studio XIAO ESP32-C3 running the NFC bridge firmware</li>
                 <li>PN532 NFC module wired to the Arduino via SPI or I2C</li>
                 <li>MIFARE Classic 1K tags (FM11RF08S) as used in QIDI Box filament spools</li>
             </ul>
@@ -107,7 +107,7 @@
         <div class="card">
             <h2>Getting Started</h2>
             <h3>1. Connect your reader</h3>
-            <p>Power on the Arduino Nano 33 BLE with the PN532 module attached. Open the app and go to the <strong>Connect</strong> tab. The app will scan for Bluetooth devices advertising the Nordic UART Service. Tap your reader to connect.</p>
+            <p>Power on the Seeed Studio XIAO ESP32-C3 with the PN532 module attached. Open the app and go to the <strong>Connect</strong> tab. The app will scan for Bluetooth devices advertising the Nordic UART Service. Tap your reader to connect.</p>
             <h3>2. Read a tag</h3>
             <p>Place a QIDI Box filament tag on the PN532 reader. Go to the <strong>Read</strong> tab and tap <strong>Read Tag</strong>. The app reads sector 1, block 0 and displays the material, color, and manufacturer.</p>
             <h3>3. Write a tag</h3>
@@ -121,7 +121,7 @@
             <p>Make sure Bluetooth is enabled in your iPhone&rsquo;s Settings and that QBox NFC Tagger has permission to use Bluetooth. Go to <strong>Settings &gt; Privacy &amp; Security &gt; Bluetooth</strong> and ensure the app is allowed.</p>
 
             <h3>No devices found when scanning</h3>
-            <p>Ensure your Arduino Nano 33 BLE is powered on and running the NFC bridge firmware. The device must be advertising the Nordic UART Service (NUS). Try moving your iPhone closer to the Arduino.</p>
+            <p>Ensure your Seeed Studio XIAO ESP32-C3 is powered on and running the NFC bridge firmware. The device must be advertising the Nordic UART Service (NUS). Try moving your iPhone closer to the reader.</p>
 
             <h3>Read or Write timed out</h3>
             <p>Place the NFC tag directly on the PN532 reader before tapping Read or Write. The reader needs 1&ndash;2 seconds to detect the tag. Enable <strong>Continuous Mode</strong> to retry automatically until the tag is detected.</p>
@@ -144,6 +144,12 @@
 
         <footer>
             <p>&copy; 2026 Don Babcock. All rights reserved.</p>
+            <p style="margin-top: 8px;">
+                <a href="index.html" style="color: var(--blue); text-decoration: none;">Home</a> &middot;
+                <a href="parts.html" style="color: var(--blue); text-decoration: none;">Parts</a> &middot;
+                <a href="diy-nfc.html" style="color: var(--blue); text-decoration: none;">DIY NFC</a> &middot;
+                <a href="privacy.html" style="color: var(--blue); text-decoration: none;">Privacy</a>
+            </p>
         </footer>
     </div>
 </body>

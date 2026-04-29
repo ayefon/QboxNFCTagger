@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DIY NFC - QBox NFC Tagger</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: #1d1d1f;
+            background: #f5f5f7;
+            line-height: 1.6;
+        }
+        header {
+            background: #fff;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        header h1 { font-size: 2.2rem; font-weight: 700; }
+        header p { color: #6e6e73; margin-top: 0.4rem; font-size: 1.1rem; }
+        main { max-width: 720px; margin: 2rem auto; padding: 0 1.5rem; }
+        .card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.25rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+        .card h2 { font-size: 1.15rem; margin-bottom: 0.5rem; }
+        .card p, .card li, .card td, .card th { font-size: 0.95rem; color: #444; }
+        .card ul, .card ol { padding-left: 1.25rem; margin-top: 0.4rem; }
+        .card li { margin-bottom: 0.3rem; }
+        .card a { color: #0071e3; text-decoration: none; }
+        .card a:hover { text-decoration: underline; }
+        .diagram {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            margin: 0.75rem auto;
+            border-radius: 8px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0.75rem;
+        }
+        th, td {
+            text-align: left;
+            padding: 0.5rem 0.75rem;
+            border-bottom: 1px solid #e5e5ea;
+        }
+        th { background: #f5f5f7; font-weight: 600; color: #1d1d1f; }
+        .swatch {
+            display: inline-block;
+            width: 0.85rem;
+            height: 0.85rem;
+            border-radius: 50%;
+            margin-right: 0.4rem;
+            vertical-align: middle;
+            border: 1px solid #ccc;
+        }
+        .callout {
+            background: #fff8e1;
+            border-left: 4px solid #f5a623;
+            padding: 0.85rem 1rem;
+            border-radius: 6px;
+            margin-top: 0.75rem;
+        }
+        code {
+            background: #f0f0f3;
+            padding: 0.1rem 0.35rem;
+            border-radius: 4px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 0.9em;
+        }
+        footer {
+            text-align: center;
+            padding: 2rem 1.5rem;
+            font-size: 0.85rem;
+            color: #86868b;
+        }
+        footer a { color: #0071e3; text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+        .back {
+            display: block;
+            max-width: 720px;
+            margin: 1.25rem auto 0;
+            padding: 0 1.5rem;
+            color: #0071e3;
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+        .back:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>DIY NFC</h1>
+        <p>Build your own NFC tag reader for QBox NFC Tagger</p>
+    </header>
+    <a href="index.html" class="back">&larr; Back to QBox NFC Tagger</a>
+    <main>
+        <div class="card">
+            <h2>Overview</h2>
+            <p>This page describes how to wire a PN532 NFC reader module to a Seeed Studio XIAO-ESP32-C3 microcontroller so it can be used as a companion NFC tag reader. The two boards communicate over I&sup2;C using only four wires.</p>
+        </div>
+
+        <div class="card">
+            <h2>Parts Needed</h2>
+            <ul>
+                <li>Seeed Studio XIAO-ESP32-C3 (or pin-compatible XIAO board)</li>
+                <li>PN532 NFC module (the red 4.3 &times; 4.1 cm board)</li>
+                <li>Four jumper wires</li>
+                <li>USB-C cable for power and flashing</li>
+            </ul>
+            <p style="margin-top: 0.75rem;">See the <a href="parts.html">parts list</a> for direct Amazon links and pricing.</p>
+        </div>
+
+        <div class="card">
+            <h2>Wiring Diagram</h2>
+            <img src="nfcwiring.png" alt="Wiring diagram showing a Seeed XIAO-ESP32-C3 connected to a PN532 NFC module over I2C" class="diagram">
+            <p>A printable version is available as a <a href="nfcconnections.pdf">PDF</a>.</p>
+        </div>
+
+        <div class="card">
+            <h2>Connections</h2>
+            <p>Connect the four pins between the XIAO and the PN532 as follows:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Wire</th>
+                        <th>XIAO-ESP32-C3</th>
+                        <th>PN532</th>
+                        <th>Purpose</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="swatch" style="background:#1d1d1f;"></span>Black</td>
+                        <td>GND</td>
+                        <td>GND</td>
+                        <td>Ground</td>
+                    </tr>
+                    <tr>
+                        <td><span class="swatch" style="background:#d0021b;"></span>Red</td>
+                        <td>3.3V</td>
+                        <td>VCC</td>
+                        <td>Power</td>
+                    </tr>
+                    <tr>
+                        <td><span class="swatch" style="background:#7ed321;"></span>Green</td>
+                        <td>D4 (SDA)</td>
+                        <td>SDA</td>
+                        <td>I&sup2;C data</td>
+                    </tr>
+                    <tr>
+                        <td><span class="swatch" style="background:#4a90e2;"></span>Blue</td>
+                        <td>D5 (SCL)</td>
+                        <td>SCL</td>
+                        <td>I&sup2;C clock</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>DIP Switch Configuration</h2>
+            <p>The PN532 module supports three interface modes &mdash; UART, I&sup2;C, and SPI &mdash; selected by a pair of DIP switches near the bottom edge of the board (highlighted by the yellow circle in the diagram). The silkscreen legend next to the switches reads:</p>
+            <ul>
+                <li><code>RSU</code> &mdash; UART (HSU)</li>
+                <li><code>I2C</code> &mdash; I&sup2;C</li>
+                <li><code>SP</code> &mdash; SPI</li>
+            </ul>
+            <p>For this build the module must be set to <strong>I&sup2;C mode</strong>:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Switch</th>
+                        <th>Position</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1 (I0)</td><td>ON</td></tr>
+                    <tr><td>2 (I1)</td><td>OFF</td></tr>
+                </tbody>
+            </table>
+            <div class="callout">
+                <strong>Important:</strong> If the DIP switches are left in their default position the PN532 will start in UART or SPI mode and the XIAO will not be able to talk to it. Double-check the switch positions before powering the board.
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Assembly Tips</h2>
+            <ol>
+                <li>Set the DIP switches to I&sup2;C mode <em>before</em> soldering or plugging anything in.</li>
+                <li>Solder header pins to the four labeled pads on the PN532 (GND, VCC, SDA, SCL) and to the matching pins on the XIAO.</li>
+                <li>Connect the four jumper wires as shown in the diagram.</li>
+                <li>Power the XIAO from USB-C. The PN532's onboard LED should light up.</li>
+                <li>Flash your firmware and bring an NFC tag near the antenna side of the PN532 to confirm it reads.</li>
+            </ol>
+        </div>
+
+        <div class="card">
+            <h2>Need Help?</h2>
+            <p>If something isn't working, please open an issue on the project's <a href="https://github.com/ayefon/QboxNFCTagger/issues">GitHub page</a> or visit the <a href="support.html">support page</a>.</p>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2026 Don Babcock. All rights reserved.</p>
+        <p><a href="index.html">Home</a> &middot; <a href="parts.html">Parts</a> &middot; <a href="diy-nfc.html">DIY NFC</a> &middot; <a href="support.html">Support</a> &middot; <a href="privacy.html">Privacy Policy</a></p>
+    </footer>
+</body>
+</html>
