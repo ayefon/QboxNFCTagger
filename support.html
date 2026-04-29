@@ -106,10 +106,10 @@
 
         <div class="card">
             <h2>Getting Started</h2>
-            <h3>1. Connect your reader</h3>
-            <p>Power on the Seeed Studio XIAO ESP32-C3 with the PN532 module attached. Open the app and go to the <strong>Connect</strong> tab. The app will scan for Bluetooth devices advertising the Nordic UART Service. Tap your reader to connect.</p>
+            <h3>1. Connect your reader/writer</h3>
+            <p>Power on the Seeed Studio XIAO ESP32-C3 with the PN532 module attached. Open the app and go to the <strong>Connect</strong> tab. The app will scan for Bluetooth devices advertising the Nordic UART Service. Tap your reader/writer to connect.</p>
             <h3>2. Read a tag</h3>
-            <p>Place a QIDI Box filament tag on the PN532 reader. Go to the <strong>Read</strong> tab and tap <strong>Read Tag</strong>. The app reads sector 1, block 0 and displays the material, color, and manufacturer.</p>
+            <p>Place a QIDI Box filament tag on the PN532 reader/writer. Go to the <strong>Read</strong> tab and tap <strong>Read Tag</strong>. The app reads sector 1, block 0 and displays the material, color, and manufacturer.</p>
             <h3>3. Write a tag</h3>
             <p>Go to the <strong>Write</strong> tab, select a material and color from the picker, then tap <strong>Write to Tag</strong>. The data is written to block 4 of the MIFARE Classic 1K chip.</p>
         </div>
@@ -121,19 +121,19 @@
             <p>Make sure Bluetooth is enabled in your iPhone&rsquo;s Settings and that QBox NFC Tagger has permission to use Bluetooth. Go to <strong>Settings &gt; Privacy &amp; Security &gt; Bluetooth</strong> and ensure the app is allowed.</p>
 
             <h3>No devices found when scanning</h3>
-            <p>Ensure your Seeed Studio XIAO ESP32-C3 is powered on and running the NFC bridge firmware. The device must be advertising the Nordic UART Service (NUS). Try moving your iPhone closer to the reader.</p>
+            <p>Ensure your Seeed Studio XIAO ESP32-C3 is powered on and running the NFC bridge firmware. The device must be advertising the Nordic UART Service (NUS). Try moving your iPhone closer to the reader/writer.</p>
 
             <h3>Read or Write timed out</h3>
-            <p>Place the NFC tag directly on the PN532 reader before tapping Read or Write. The reader needs 1&ndash;2 seconds to detect the tag. Enable <strong>Continuous Mode</strong> to retry automatically until the tag is detected.</p>
+            <p>Place the NFC tag directly on the PN532 reader/writer before tapping Read or Write. The reader/writer needs 1&ndash;2 seconds to detect the tag. Enable <strong>Continuous Mode</strong> to retry automatically until the tag is detected.</p>
 
             <h3>Authentication error</h3>
             <p>The app tries the QIDI authentication key first, then falls back to the default MIFARE key. If both fail, the tag may use a non-standard key that is not currently supported.</p>
 
             <h3>What is Continuous Mode?</h3>
-            <p>Enable the <strong>Continuous Read</strong> or <strong>Continuous Write</strong> toggle to keep retrying until a tag is successfully read or written. This is useful when positioning the tag on the reader &mdash; the app automatically detects it when contact is made. Tap the button again to cancel. Both toggles remember their state between app launches.</p>
+            <p>Enable the <strong>Continuous Read</strong> or <strong>Continuous Write</strong> toggle to keep retrying until a tag is successfully read or written. This is useful when positioning the tag on the reader/writer &mdash; the app automatically detects it when contact is made. Tap the button again to cancel. Both toggles remember their state between app launches.</p>
 
             <h3>What is Demo Mode?</h3>
-            <p>Demo Mode simulates a connected NFC reader so you can explore the app without hardware. Enable it on the <strong>Help</strong> tab. All operations return simulated data and an orange &ldquo;DEMO MODE&rdquo; banner appears at the top of the screen.</p>
+            <p>Demo Mode simulates a connected NFC reader/writer so you can explore the app without hardware. Enable it on the <strong>Help</strong> tab. All operations return simulated data and an orange &ldquo;DEMO MODE&rdquo; banner appears at the top of the screen.</p>
         </div>
 
         <div class="card">

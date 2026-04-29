@@ -82,18 +82,18 @@
 
         <div class="card">
             <h2>Bluetooth</h2>
-            <p>QBox NFC Tagger uses Bluetooth Low Energy (BLE) to communicate with an external NFC reader device (Seeed Studio XIAO ESP32-C3 + PN532). Bluetooth is used solely to:</p>
+            <p>QBox NFC Tagger uses Bluetooth Low Energy (BLE) to communicate with an external NFC reader/writer device (Seeed Studio XIAO ESP32-C3 + PN532). Bluetooth is used solely to:</p>
             <ul>
-                <li>Discover nearby NFC reader devices advertising the Nordic UART Service</li>
-                <li>Send read and write commands to the connected reader</li>
-                <li>Receive NFC tag data from the reader</li>
+                <li>Discover nearby NFC reader/writer devices advertising the Nordic UART Service</li>
+                <li>Send read and write commands to the connected reader/writer</li>
+                <li>Receive NFC tag data from the reader/writer</li>
             </ul>
             <p>No Bluetooth data is recorded, transmitted to external servers, or shared with third parties. The app does not track or log which devices you connect to.</p>
         </div>
 
         <div class="card">
             <h2>NFC Tag Data</h2>
-            <p>The app reads and writes data to NFC tags placed on the external reader. This data consists of filament information (material type, color, and manufacturer codes) stored on the physical MIFARE Classic 1K tag. Tag data is displayed on-screen and is not transmitted, logged, or stored beyond the current session.</p>
+            <p>The app reads and writes data to NFC tags placed on the external reader/writer. This data consists of filament information (material type, color, and manufacturer codes) stored on the physical MIFARE Classic 1K tag. Tag data is displayed on-screen and is not transmitted, logged, or stored beyond the current session.</p>
         </div>
 
         <div class="card">
