@@ -75,6 +75,8 @@
             font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
             font-size: 0.9em;
         }
+        .cmd-table th:nth-child(1), .cmd-table td:nth-child(1) { white-space: nowrap; }
+        .cmd-table code { white-space: nowrap; }
         footer {
             text-align: center;
             padding: 2rem 1.5rem;
@@ -237,6 +239,99 @@
             </ol>
             <div class="callout" style="margin-top: 0.85rem;">
                 <strong>If the upload fails to find the board:</strong> hold the BOOT button on the XIAO, tap RESET, then release BOOT to force the bootloader. On macOS, also verify that you've granted the IDE permission to use the USB serial device.
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Nordic NUS Commands</h2>
+            <p>Once the sketch is running, the bridge advertises as <code>NFC-BLE-Bridge</code> over the Nordic UART Service (NUS). Each command is a single ASCII line written to the RX characteristic and terminated with <code>\n</code> (or <code>\r</code>). Replies are returned as one or more notifications on the TX characteristic, ending with a lone <code>\n</code> notification that marks end-of-message. Commands are case-insensitive; arguments are not. The sketch echoes every command and reply over USB serial at 115200 baud as well, so you can drive it from a serial terminal for testing.</p>
+            <table class="cmd-table">
+                <thead>
+                    <tr>
+                        <th>Command</th>
+                        <th>Description</th>
+                        <th>Reply</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>SCAN</code></td>
+                        <td>Look for an ISO-14443A tag in the field and report its UID.</td>
+                        <td><code>OK UID:&lt;hex&gt;</code> or <code>ERR No tag found</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>READ &lt;block&gt;</code></td>
+                        <td>Authenticate with the current key/mode and read one 16-byte block (0&ndash;63 on a 1K, 0&ndash;255 on a 4K).</td>
+                        <td><code>OK B&lt;n&gt;:&lt;32-hex&gt;</code> or <code>ERR Auth failed block &lt;n&gt;</code> / <code>ERR Read failed block &lt;n&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>WRITE &lt;block&gt; &lt;32 hex&gt;</code></td>
+                        <td>Write 16 bytes (32 hex chars) to a non-trailer block. Sector trailers are rejected to avoid bricking the sector.</td>
+                        <td><code>OK Written block &lt;n&gt;</code> or <code>ERR ...</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>DUMP</code></td>
+                        <td>Read every block on the tag, sector by sector, streaming one notification per block. Long-running &mdash; send <code>CANCEL</code> to abort.</td>
+                        <td><code>OK DUMP START UID:&lt;hex&gt;</code>, then <code>B&lt;n&gt;:&lt;32-hex&gt;</code> per block, then <code>OK DUMP END</code> (or <code>ERR DUMP cancelled</code>)</td>
+                    </tr>
+                    <tr>
+                        <td><code>KEYA &lt;12 hex&gt;</code></td>
+                        <td>Set the 6-byte MIFARE Classic Key A used by subsequent reads/writes when <code>AUTHMODE</code> is <code>A</code>. Defaults to <code>FFFFFFFFFFFF</code>.</td>
+                        <td><code>OK Key set:&lt;hex&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>KEYB &lt;12 hex&gt;</code></td>
+                        <td>Set the 6-byte Key B used when <code>AUTHMODE</code> is <code>B</code>.</td>
+                        <td><code>OK Key set:&lt;hex&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>AUTHMODE A</code> | <code>AUTHMODE B</code></td>
+                        <td>Choose which key (and matching auth command) is used for the next operation. Defaults to <code>A</code>.</td>
+                        <td><code>OK AUTHMODE:A</code> or <code>OK AUTHMODE:B</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>CANCEL</code></td>
+                        <td>Abort the in-flight long-running command (currently only <code>DUMP</code>). Handled directly by the BLE callback so it works while another command is still running.</td>
+                        <td><code>OK Cancelling</code> or <code>ERR Nothing to cancel</code></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="callout" style="margin-top: 0.85rem;">
+                <strong>One command at a time.</strong> If you send a new command while one is still running, the bridge replies <code>ERR Busy</code> instead of queuing it. Wait for the trailing <code>\n</code> notification (or send <code>CANCEL</code>) before issuing the next line. Unknown commands return <code>ERR Unknown command: &lt;input&gt;</code>.
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Troubleshooting with a Generic BLE Utility</h2>
+            <p>If something isn't working it's often useful to talk to the reader/writer directly &mdash; bypassing the QBox NFC Tagger app entirely &mdash; so you can tell whether the issue is in the firmware, the BLE link, or the app. Any iOS app that can connect to a Nordic UART Service (NUS) peripheral and send/receive raw text will do. Three popular free ones from the App Store:</p>
+            <ul>
+                <li><strong>nRF Connect for Mobile</strong> by Nordic Semiconductor &mdash; the most thorough. Shows every advertisement packet, GATT service, and characteristic.</li>
+                <li><strong>Bluefruit Connect</strong> by Adafruit &mdash; has a built-in <em>UART</em> console mode that pairs cleanly with NUS peripherals.</li>
+                <li><strong>LightBlue</strong> by PunchThrough &mdash; lightweight browser; lets you write hex/UTF-8 to any characteristic and subscribe to notifications.</li>
+            </ul>
+            <h3 style="font-size: 1rem; margin-top: 1rem; margin-bottom: 0.4rem;">What to check first</h3>
+            <ol>
+                <li><strong>Is it advertising?</strong> Open the scanner in your chosen app and look for a peripheral named <code>NFC-BLE-Bridge</code>. If you don't see it, the sketch isn't running, the LED-pin loop never reached <code>setup()</code>, or BLE init failed (3-pulse blink code).</li>
+                <li><strong>Does the NUS service show up?</strong> Connect and look for service UUID <code>6E400001-B5A3-F393-E0A9-E50E24DCCA9E</code> with two characteristics &mdash; RX <code>...0002...</code> (write) and TX <code>...0003...</code> (notify).</li>
+                <li><strong>Subscribe to TX notifications</strong> on the <code>...0003...</code> characteristic before sending anything. Without this you'll send a command, the reader will respond, and you'll see nothing &mdash; making it look broken when it's working.</li>
+            </ol>
+            <h3 style="font-size: 1rem; margin-top: 1rem; margin-bottom: 0.4rem;">Bluefruit Connect (easiest)</h3>
+            <ol>
+                <li>Open the app, tap <code>NFC-BLE-Bridge</code>, then choose <strong>UART</strong>.</li>
+                <li>Type <code>SCAN</code> and tap <strong>Send</strong>. Make sure the line ending is set to <strong>\n</strong> (Newline) in the gear menu &mdash; the sketch only dispatches a command after it sees a newline or carriage return.</li>
+                <li>Place a tag on the antenna and you should see <code>OK UID:&lt;hex&gt;</code>. No tag, and you'll see <code>ERR No tag found</code> after about a second.</li>
+            </ol>
+            <h3 style="font-size: 1rem; margin-top: 1rem; margin-bottom: 0.4rem;">nRF Connect / LightBlue (more manual)</h3>
+            <ol>
+                <li>Connect to <code>NFC-BLE-Bridge</code>, expand the NUS service.</li>
+                <li>On the <strong>TX</strong> characteristic (<code>...0003...</code>) tap the subscribe / notifications icon (three down-arrows in nRF Connect, the <em>Listen for notifications</em> button in LightBlue).</li>
+                <li>On the <strong>RX</strong> characteristic (<code>...0002...</code>) write the bytes for <code>SCAN\n</code>. In nRF Connect choose <em>Text</em> input and type <code>SCAN\n</code> with the literal backslash-n; in LightBlue switch the input to <em>UTF-8 String</em> and append a real newline. If you forget the terminator, nothing happens &mdash; the bridge is waiting for end-of-line.</li>
+                <li>The reply arrives as several short notifications (≤ 20 bytes each) followed by a final lone <code>\n</code>. Concatenate them to read the response.</li>
+            </ol>
+            <h3 style="font-size: 1rem; margin-top: 1rem; margin-bottom: 0.4rem;">USB serial fallback</h3>
+            <p>You can also skip BLE entirely: open the Arduino IDE Serial Monitor at <strong>115200 baud</strong> with line ending set to <strong>Newline</strong>. Every BLE command and reply is mirrored on USB serial, and you can issue commands the same way. If the reader/writer works over USB but not BLE, the problem is on the radio side; if it doesn't work over either, focus on the PN532 wiring and DIP switches.</p>
+            <div class="callout" style="margin-top: 0.85rem;">
+                <strong>iOS quirk:</strong> if a previous pairing got into a weird state, "forget" the device under <strong>Settings &rarr; Bluetooth</strong> and re-scan. iOS caches GATT databases aggressively and will sometimes hide newly added characteristics from apps until the cache is cleared this way.
             </div>
         </div>
 
