@@ -80,6 +80,12 @@
             margin-top: 8px;
         }
         .card a.button:hover { opacity: 0.85; }
+        .card video {
+            width: 100%;
+            border-radius: 8px;
+            margin-top: 8px;
+            background: #000;
+        }
         footer {
             text-align: center;
             margin-top: 48px;
@@ -112,6 +118,15 @@
             <p>Place a QIDI Box filament tag on the PN532 reader/writer. Go to the <strong>Read</strong> tab and tap <strong>Read Tag</strong>. The app reads sector 1, block 0 and displays the material, color, and manufacturer.</p>
             <h3>3. Write a tag</h3>
             <p>Go to the <strong>Write</strong> tab, select a material and color from the picker, then tap <strong>Write to Tag</strong>. The data is written to block 4 of the MIFARE Classic 1K chip.</p>
+        </div>
+
+        <div class="card">
+            <h2>Read/Write Demo</h2>
+            <p>Watch the app read and write a QIDI Box filament tag using a Bluetooth-connected PN532 reader/writer.</p>
+            <video controls playsinline preload="metadata">
+                <source src="QBoxNFCRWDemo.mov" type="video/quicktime">
+                Your browser does not support the video tag. <a href="QBoxNFCRWDemo.mov">Download the demo video</a>.
+            </video>
         </div>
 
         <div class="card">
