@@ -240,6 +240,15 @@
             <div class="callout" style="margin-top: 0.85rem;">
                 <strong>If the upload fails to find the board:</strong> hold the BOOT button on the XIAO, tap RESET, then release BOOT to force the bootloader. On macOS, also verify that you've granted the IDE permission to use the USB serial device.
             </div>
+            <div class="callout" style="margin-top: 0.85rem; background: #e8f4fd; border-left-color: #0071e3;">
+                <strong>Using a XIAO ESP32-C6 instead?</strong> It's pin-compatible with the C3 &mdash; same footprint, same D4/D5 I&sup2;C pins &mdash; so the wiring above is unchanged and the sketch compiles and runs as-is. A few setup differences:
+                <ul style="margin-top: 0.4rem;">
+                    <li>Install <strong>ESP32 by Espressif Systems v3.0.0 or newer</strong> (built on ESP-IDF 5.1+). The 2.0.x line predates C6 support.</li>
+                    <li>Select <strong>Tools &rarr; Board &rarr; ESP32 Arduino &rarr; XIAO_ESP32C6</strong>.</li>
+                    <li>The <strong>USB CDC On Boot</strong> menu item doesn't apply &mdash; the C6 uses native USB-Serial/JTAG and serial-over-USB is on by default.</li>
+                    <li>The C6's max BLE TX power is +20&nbsp;dBm vs. +9&nbsp;dBm on the C3. The sketch's <code>setPower(9)</code> still works; raise it if you want extra range.</li>
+                </ul>
+            </div>
         </div>
 
         <div class="card">
